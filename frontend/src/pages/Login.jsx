@@ -48,7 +48,7 @@ function Login() {
       setSuccess(response.data.message);
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/home");
       }, 1000);
     } catch (error) {
       setError(error.response?.data?.message || "Error logging in");

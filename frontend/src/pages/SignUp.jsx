@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Auth.css";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -60,6 +61,11 @@ function SignUp() {
       );
 
       setSuccess(response.data.message);
+      
+      setTimeout(() => {
+        navigate("/home");
+      }, 1000);
+
     } catch (error) {
       setError(error.response?.data?.message || "Error signing up");
     }
@@ -136,7 +142,7 @@ function SignUp() {
                 />
               </div>
 
-              <button className="auth-button" type="submit">
+              <button className="auth-button" type="submit" >
                 Create Account
               </button>
             </form>
