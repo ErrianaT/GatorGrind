@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import profileIcon from "../assets/profileIcon.png";
 import placeholderImage from "../assets/placeholderImage.png";
-import leftArrow from "../assets/left-arrow.png";
-import rightArrow from "../assets/right-arrow.png";
+import arrowIcon from "../assets/right-arrow.png";
 
-const categories = [
-  "Food & Drink",
+const mainCategories = [
+  "Hair",
   "Tech",
   "Fashion",
   "Art",
-  "Services"
+  "Food & Drink"
+];
+
+const extraCategories = [
+  "Services",
+  "Wellness",
+  "Education",
+  "Entertainment"
 ];
 
 const Home = () => {
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
+  const [showMore, setShowMore] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Using placeholder image for demo
     setImages([placeholderImage, placeholderImage, placeholderImage]);
   }, []);
 
@@ -90,11 +98,28 @@ const Home = () => {
         <div className="categories">
           <h2>Browse by Category</h2>
           <div className="category-list">
-            {categories.map((cat, i) => (
-              <button key={i} className="category-btn">
-                {cat}
-              </button>
+            {mainCategories.map((cat, i) => (
+              <button key={i} className="category-btn">{cat}</button>
             ))}
+
+            {showMore && extraCategories.map((cat, i) => (
+              <button key={`extra-${i}`} className="category-btn">{cat}</button>
+            ))}
+
+            <button
+              className="category-btn more-btn"
+              onClick={() => setShowMore(prev => !prev)}
+            >
+              {showMore ? "Show Less" : "More"}
+            </button>
+          </div>
+
+          <div
+            className="view-all-businesses"
+            onClick={() => navigate("/grid-view")}
+          >
+            View All Businesses
+            <img src={arrowIcon} alt="arrow" className="arrow-icon" />
           </div>
         </div>
       </div>
