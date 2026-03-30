@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../Auth.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -46,52 +47,75 @@ function Login() {
 
       setSuccess(response.data.message);
 
-      // redirect after 1 second
       setTimeout(() => {
         navigate("/");
       }, 1000);
-
     } catch (error) {
       setError(error.response?.data?.message || "Error logging in");
     }
   }
 
   return (
-    <div>
-      <h1>Log In</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>UF Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your UF email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-left">
+          <span className="auth-brand">GatorGrind</span>
+          <h1>
+            Welcome
+            <br />
+            back.
+          </h1>
+          <p>
+            Log in to continue exploring <span className="auth-highlight">affordable, student-friendly services</span> and stay connected with the UF community.
+          </p>
         </div>
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+        <div className="auth-right">
+          <div className="auth-card">
+            <h2>Log In</h2>
+            <p className="auth-subtext">
+              Use your UF email and password to continue.
+            </p>
+
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="auth-field">
+                <label htmlFor="email">UF Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your UF email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button className="auth-button" type="submit">
+                Log In
+              </button>
+            </form>
+
+            {error && <p className="auth-message error">{error}</p>}
+            {success && <p className="auth-message success">{success}</p>}
+
+            <p className="auth-footer">
+              Don’t have an account? <Link to="/signup">Sign up</Link>
+            </p>
+          </div>
         </div>
-
-        <button type="submit">Log In</button>
-      </form>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
-
-      <p>
-        Don’t have an account? <Link to="/signup">Sign up</Link>
-      </p>
+      </div>
     </div>
   );
 }

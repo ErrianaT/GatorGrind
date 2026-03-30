@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "../Auth.css";
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -65,63 +66,90 @@ function SignUp() {
   }
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            placeholder="Enter your full name"
-            value={formData.fullName}
-            onChange={handleChange}
-          />
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-left">
+          <span className="auth-brand">GatorGrind</span>
+          <h1>
+            Join the campus
+            <br />
+            marketplace.
+          </h1>
+          <p>
+            Create your account to discover <span className="auth-highlight">student-run businesses</span>, connect with trusted UF peers, and be part of a more convenient campus community.
+          </p>
         </div>
 
-        <div>
-          <label>UF Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your UF email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+        <div className="auth-right">
+          <div className="auth-card">
+            <h2>Create Account</h2>
+            <p className="auth-subtext">
+              Sign up with your UF email to get started.
+            </p>
+
+            <form className="auth-form" onSubmit={handleSubmit}>
+              <div className="auth-field">
+                <label htmlFor="fullName">Full Name</label>
+                <input
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="email">UF Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your UF email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="auth-field">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button className="auth-button" type="submit">
+                Create Account
+              </button>
+            </form>
+
+            {error && <p className="auth-message error">{error}</p>}
+            {success && <p className="auth-message success">{success}</p>}
+
+            <p className="auth-footer">
+              Already have an account? <Link to="/login">Log in</Link>
+            </p>
+          </div>
         </div>
-
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div>
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm your password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button type="submit">Create Account</button>
-      </form>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>{success}</p>}
-
-      <p>
-        Already have an account? <Link to="/login">Log in</Link>
-      </p>
+      </div>
     </div>
   );
 }
