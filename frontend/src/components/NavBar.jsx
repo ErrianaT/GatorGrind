@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="search-group">
           <input placeholder="Search Student Businesses" />
           <input placeholder="Where?" />
-          <button className="btn view-btn">Grid View</button>
+          <button className="btn view-btn" onClick={() => navigate("/grid-view")}>Grid View</button>
           <button className="btn view-btn">Map View</button>
           <button className="btn add-btn">+ Add a Business</button>
         </div>
