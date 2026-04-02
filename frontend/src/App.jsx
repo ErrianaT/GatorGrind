@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import AddBusiness from "./pages/AddBusiness";
 import Business from "./pages/Business";
+import MapView from "./pages/MapView";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/addbusiness" element={<AddBusiness />} />
         <Route path="/business" element={<Business />} />
+        <Route path="/map-view" element={<MapView />} />
       </Routes>
     </BrowserRouter>
   );
