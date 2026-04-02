@@ -3,6 +3,8 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import AddBusiness from "./pages/AddBusiness";
+import Business from "./pages/Business";
 import MapView from "./pages/MapView";
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/addbusiness" element={<AddBusiness />} />
+        <Route path="/business" element={<Business />} />
         <Route path="/map-view" element={<MapView />} />
       </Routes>
     </BrowserRouter>
