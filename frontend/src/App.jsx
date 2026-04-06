@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import AddBusiness from "./pages/AddBusiness";
 import Business from "./pages/Business";
 import MapView from "./pages/MapView";
+import GridView from "./pages/GridView"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/addbusiness" element={<AddBusiness />} />
         <Route path="/business" element={<Business />} />
         <Route path="/map-view" element={<MapView />} />
+        <Route path="/grid-view" element={<GridView />} />
       </Routes>
     </BrowserRouter>
   );
