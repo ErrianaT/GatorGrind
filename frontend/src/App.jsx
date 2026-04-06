@@ -17,7 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/addbusiness" element={<AddBusiness />} />
+        <Route path="/add-business" element={<AddBusiness />} />
         <Route path="/business" element={<Business />} />
         <Route path="/map-view" element={<MapView />} />
         <Route path="/grid-view" element={<GridView />} />

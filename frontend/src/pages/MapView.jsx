@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMemo, useState } from "react";
+import Navbar from "../components/NavBar";
 import {
   MapContainer,
   TileLayer,
@@ -84,38 +85,7 @@ function MapView() {
 
   return (
     <div className="map-page">
-      <header className="map-navbar">
-        <Link to="/home" className="map-logo">
-          GatorGrind
-        </Link>
-
-        <input
-          type="text"
-          placeholder="Search Student Businesses"
-          className="map-nav-search"
-        />
-
-        <input
-          type="text"
-          placeholder="Where?"
-          className="map-nav-location"
-        />
-
-        <div className="map-nav-buttons">
-         <button className="map-nav-btn" disabled>
-           Grid View
-         </button>
-
-         <button className="map-nav-btn active">Map View</button>
-
-         <button className="map-add-btn">+ Add a Business</button>
-        </div>
-
-        <button className="map-profile-btn" aria-label="Profile">
-          <span className="map-profile-icon">👤</span>
-        </button>
-      </header>
-
+      <Navbar />
       <main className="map-main">
               <section className="map-filters-row">
                   <span className="map-filter-label">Filter By:</span>
