@@ -1,0 +1,121 @@
+.reviews-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #dfe9f7 0%, #ebf4ff 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.reviews-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.reviews-container h1 {
+  font-size: 32px;
+  color: #022279;
+  margin-bottom: 30px;
+}
+
+.no-reviews-msg {
+  text-align: center;
+  color: #64748b;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.12);
+}
+
+.review-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.review-card-header h3 {
+  color: #022279;
+  font-size: 20px;
+  margin: 0;
+}
+
+.review-stars .star-filled {
+  color: #fbbf24;
+  font-size: 18px;
+}
+
+.review-stars .star-empty {
+  color: #e2e8f0;
+  font-size: 18px;
+}
+
+.review-category {
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.review-comment {
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+@media (max-width: 700px) {
+  .reviews-container {
+    padding: 20px;
+  }
+
+  .reviews-container h1 {
+    font-size: 24px;
+  }
+
+  .review-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
