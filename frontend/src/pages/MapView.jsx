@@ -25,6 +25,36 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
+// Create custom blue marker icon
+const blueMarkerIcon = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// Create custom orange marker icon
+const orangeMarkerIcon = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
+// Create custom red marker icon for user location (optional)
+const redMarkerIcon = new L.Icon({
+  iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 const categories = [
   "Hair",
   "Tech",
@@ -221,6 +251,14 @@ function MapView() {
     return [userLocation.lat, userLocation.lng];
   }, [selectedBusiness, userLocation]);
 
+  // Function to get the appropriate marker icon based on selection
+  const getMarkerIcon = (business) => {
+    if (selectedBusiness && business._id === selectedBusiness._id) {
+      return orangeMarkerIcon;
+    }
+    return blueMarkerIcon;
+  };
+
   return (
     <div className="map-page">
       <Navbar />
@@ -346,7 +384,11 @@ function MapView() {
                 const [lng, lat] = business.location.coordinates.map(Number);
 
                 return (
-                  <Marker key={business._id} position={[lat, lng]}>
+                  <Marker 
+                    key={business._id} 
+                    position={[lat, lng]}
+                    icon={getMarkerIcon(business)}
+                  >
                     <Popup>
                       <strong>{business.business_name}</strong>
                       <br />
