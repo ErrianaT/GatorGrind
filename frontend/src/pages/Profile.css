@@ -1,3 +1,48 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeInOut 3s ease forwards;
+}
+
+/* Success + Error styles */
+.toast.success {
+  background-color: #e6f9ed;
+  color: #1a7f37;
+}
+
+.toast.error {
+  background-color: #fdecea;
+  color: #b42318;
+}
+
+/* Animation */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 .profile-page {
   min-height: 100vh;
   background: linear-gradient(180deg, #dfe9f7 0%, #ebf4ff 100%);

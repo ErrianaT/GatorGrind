@@ -19,6 +19,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [showAddBusiness, setShowAddBusiness] = useState(false);
   const [editingBusiness, setEditingBusiness] = useState(null);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
   
   // New business form state
   const [newBusiness, setNewBusiness] = useState({
@@ -47,6 +49,15 @@ const Profile = () => {
     "Education",
     "Entertainment"
   ];
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     // Fetch user data from localStorage or API
@@ -90,7 +101,8 @@ const Profile = () => {
       };
       reader.readAsDataURL(file);
     } else {
-      alert("Only PNG or JPEG files are allowed.");
+      setMessage("Only PNG or JPEG files are allowed.");
+      setMessageType("error");
     }
   };
 
@@ -120,7 +132,8 @@ const Profile = () => {
       localStorage.setItem("userBio", editBio);
     }
     setIsEditing(false);
-    alert("Profile updated successfully!");
+    setMessage("Profile updated successfully!");
+    setMessageType("success");
   };
 
   const handleCancelEdit = () => {
@@ -173,10 +186,19 @@ const Profile = () => {
       try {
         await axios.delete(`http://localhost:5001/api/businesses/${businessId}`);
         setUserBusinesses(userBusinesses.filter(b => b._id !== businessId));
-        alert("Business deleted successfully!");
+        setMessage("");
+        setTimeout(() => {
+          setMessage("Business deleted successfully!");
+          setMessageType("success");
+        }, 10);
+  
       } catch (err) {
         console.error("Error deleting business:", err);
-        alert("Failed to delete business. Please try again.");
+        setMessage("");
+        setTimeout(() => {
+          setMessage("Failed to delete business. Please try again.");
+          setMessageType("error");
+        }, 10);
       }
     }
   };
@@ -203,7 +225,11 @@ const Profile = () => {
   const handleSaveBusiness = async () => {
     // Validate required fields
     if (!newBusiness.business_name || !newBusiness.category) {
-      alert("Please fill in business name and category");
+      setMessage("");
+      setTimeout(() => {
+        setMessage("Please fill in business name and category.");
+        setMessageType("error");
+      }, 10);
       return;
     }
 
@@ -219,26 +245,42 @@ const Profile = () => {
         // Update existing business
         const response = await axios.put(`http://localhost:5001/api/businesses/${editingBusiness._id}`, businessData);
         setUserBusinesses(userBusinesses.map(b => b._id === editingBusiness._id ? response.data : b));
-        alert("Business updated successfully!");
+        setMessage("");
+        setTimeout(() => {
+          setMessage("Business updated successfully!");
+          setMessageType("success");
+        }, 10);
       } else {
         // Add new business
         const response = await axios.post("http://localhost:5001/api/businesses", businessData);
         setUserBusinesses([...userBusinesses, response.data]);
-        alert("Business added successfully!");
+        setMessage("");
+        setTimeout(() => {
+          setMessage("Business added successfully!");
+          setMessageType("success");
+        }, 10);
       }
       
       setShowAddBusiness(false);
       setEditingBusiness(null);
     } catch (err) {
       console.error("Error saving business:", err);
-      alert("Failed to save business. Please try again.");
-    }
+      setMessage("");
+      setTimeout(() => {
+        setMessage("Failed to save business. Please try again.");
+        setMessageType("error");
+      }, 10);
+          }
   };
 
   return (
     <div className="profile-page">
       <Navbar />
-
+      {message && (
+        <div className={`toast ${messageType}`}>
+          {message}
+        </div>
+      )}
       <div className="profile-container">
         {/* LEFT SIDE */}
         <div className="profile-left">
