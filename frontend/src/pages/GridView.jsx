@@ -86,7 +86,7 @@ const GridView = () => {
         setLoading(true);
   
         const res = await axios.get(
-          "${API_URL}/api/businesses",
+          `${API_URL}/api/businesses`,
           {
             params: selectedCategory ? { category: selectedCategory } : {}
           }
