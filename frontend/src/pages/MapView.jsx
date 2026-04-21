@@ -118,7 +118,7 @@ function MapView() {
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
-        const res = await axios.get("${API_URL}/api/businesses");
+        const res = await axios.get(`${API_URL}/api/businesses`);
         setBusinesses(res.data);
       } catch (err) {
         console.error("Error fetching businesses:", err);
