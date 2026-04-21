@@ -31,7 +31,7 @@ const Home = () => {
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
-        const response = await fetch("${API_URL}/api/businesses");
+        const response = await fetch(`${API_URL}/api/businesses`);
         if (!response.ok) {
           throw new Error("Failed to fetch businesses");
         }

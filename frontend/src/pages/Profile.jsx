@@ -253,7 +253,7 @@ const Profile = () => {
         }, 10);
       } else {
         // Add new business
-        const response = await axios.post("${API_URL}/api/businesses", businessData);
+        const response = await axios.post(`${API_URL}/api/businesses`, businessData);
         setUserBusinesses([...userBusinesses, response.data]);
         setMessage("");
         setTimeout(() => {
