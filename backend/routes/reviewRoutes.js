@@ -5,7 +5,15 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-// get
+async function updateBusinessRating(businessId) {
+  const reviews = await Review.find({ business: businessId });
+  const average =
+    reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+      : 0;
+  await Business.findByIdAndUpdate(businessId, { rating: average });
+}
+
 router.get("/:id/reviews", async (req, res) => {
   try {
     const reviews = await Review.find({ business: req.params.id })
@@ -19,7 +27,6 @@ router.get("/:id/reviews", async (req, res) => {
   }
 });
 
-// add
 router.post("/:id/reviews", async (req, res) => {
   try {
     const { userId, rating, comment } = req.body;
@@ -37,9 +44,7 @@ router.post("/:id/reviews", async (req, res) => {
     }
 
     if (!rating || rating < 1 || rating > 5) {
-      return res
-        .status(400)
-        .json({ message: "Rating must be between 1 and 5" });
+      return res.status(400).json({ message: "Rating must be between 1 and 5" });
     }
 
     const existingReview = await Review.findOne({
@@ -60,12 +65,7 @@ router.post("/:id/reviews", async (req, res) => {
       });
     }
 
-    const reviews = await Review.find({ business: businessId });
-    const averageRating =
-      reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
-
-    business.rating = averageRating;
-    await business.save();
+    await updateBusinessRating(businessId);
 
     res.status(201).json({ message: "Review saved successfully" });
   } catch (error) {
@@ -74,7 +74,6 @@ router.post("/:id/reviews", async (req, res) => {
   }
 });
 
-// get reviews by user
 router.get("/user/:userId", async (req, res) => {
   try {
     const reviews = await Review.find({ user: req.params.userId })
@@ -85,6 +84,65 @@ router.get("/user/:userId", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching user reviews" });
+  }
+});
+
+router.put("/:reviewId", async (req, res) => {
+  try {
+    const { userId, rating, comment } = req.body;
+    const { reviewId } = req.params;
+
+    if (!rating || rating < 1 || rating > 5) {
+      return res.status(400).json({ message: "Rating must be between 1 and 5" });
+    }
+
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    if (review.user.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized to edit this review" });
+    }
+
+    review.rating = rating;
+    review.comment = comment || "";
+    await review.save();
+
+    await updateBusinessRating(review.business);
+
+    res.status(200).json({ message: "Review updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error updating review" });
+  }
+});
+
+router.delete("/:reviewId", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const { reviewId } = req.params;
+
+    const review = await Review.findById(reviewId);
+
+    if (!review) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
+    if (review.user.toString() !== userId) {
+      return res.status(403).json({ message: "Unauthorized to delete this review" });
+    }
+
+    const businessId = review.business;
+    await review.deleteOne();
+
+    await updateBusinessRating(businessId);
+
+    res.status(200).json({ message: "Review deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error deleting review" });
   }
 });
 
