@@ -35,7 +35,6 @@ async function geocodeAddress({ address1, address2, city, state, zipCode }) {
   }
 }
 
-// create a business
 router.post("/create", async (req, res) => {
   try {
     const {
@@ -94,24 +93,6 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// get a business
-router.get("/:id", async (req, res) => {
-  try {
-    const business = await Business.findById(req.params.id);
-
-    if (!business) {
-      return res.status(404).json({ message: "Business not found" });
-    }
-
-    res.status(200).json(business);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error fetching business" });
-  }
-});
-
-
-// get all businesses with filtering
 router.get("/", async (req, res) => {
   try {
     const { category, rating, distance, lat, lng } = req.query;
@@ -150,37 +131,29 @@ router.get("/", async (req, res) => {
   }
 });
 
-// filtering businesses
-router.get("/", async (req, res) => {
-  try {
-    const { category } = req.query;
-
-    let filter = {};
-
-    if (category) {
-      filter.category = category;
-    }
-
-    const businesses = await Business.find(filter);
-
-    res.json(businesses);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching businesses" });
-  }
-});
-
-// GET businesses by owner ID (Add this to your routes file)
 router.get("/user/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
-    
-    // This specifically looks for businesses WHERE owner matches the ID
     const businesses = await Business.find({ owner: userId });
-    
     res.status(200).json(businesses);
   } catch (error) {
     console.error("Error fetching user businesses:", error);
     res.status(500).json({ message: "Error fetching user businesses" });
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const business = await Business.findById(req.params.id);
+
+    if (!business) {
+      return res.status(404).json({ message: "Business not found" });
+    }
+
+    res.status(200).json(business);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching business" });
   }
 });
 
