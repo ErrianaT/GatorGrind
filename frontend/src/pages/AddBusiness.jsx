@@ -60,7 +60,7 @@ const AddBusiness = () => {
       const userId = localStorage.getItem("userId");
   
       const response = await axios.post(
-        "${API_URL}/api/businesses/create",
+        `${API_URL}/api/businesses/create`,
         {
           business_name: formData.businessName,
           owner: userId,
