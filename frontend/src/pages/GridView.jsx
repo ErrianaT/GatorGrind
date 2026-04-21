@@ -4,6 +4,7 @@ import Navbar from "../components/NavBar";
 import "./GridView.css";
 import arrowIcon from "../assets/right-arrow.png";
 import axios from "axios";
+import API_URL from "../config";
 
 const categories = [
   "Hair",
@@ -85,7 +86,7 @@ const GridView = () => {
         setLoading(true);
   
         const res = await axios.get(
-          "http://localhost:5001/api/businesses",
+          "${API_URL}/api/businesses",
           {
             params: selectedCategory ? { category: selectedCategory } : {}
           }

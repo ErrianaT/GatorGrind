@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/NavBar";
 import "./Reviews.css";
+import API_URL from "../config";
 
 const Reviews = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Reviews = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:5001/api/reviews/user/${userId}`);
+      const response = await axios.get(`${API_URL}/api/reviews/user/${userId}`);
       setReviews(response.data);
     } catch (error) {
       console.error("Error fetching reviews:", error);
@@ -54,7 +55,7 @@ const Reviews = () => {
     }
     const userId = localStorage.getItem("userId");
     try {
-      await axios.put(`http://localhost:5001/api/reviews/${review._id}`, {
+      await axios.put(`${API_URL}/api/reviews/${review._id}`, {
         userId,
         rating: editRating,
         comment: editComment,
@@ -77,7 +78,7 @@ const Reviews = () => {
   const deleteReview = async (id) => {
     const userId = localStorage.getItem("userId");
     try {
-      await axios.delete(`http://localhost:5001/api/reviews/${id}`, {
+      await axios.delete(`${API_URL}/api/reviews/${id}`, {
         data: { userId },
       });
       setDeletingId(null);

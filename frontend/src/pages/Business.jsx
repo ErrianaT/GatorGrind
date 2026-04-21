@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/NavBar";
 import "./Business.css";
+import API_URL from "../config";
 
 const Business = () => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const Business = () => {
 
   const fetchBusiness = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/businesses/${id}`);
+      const response = await axios.get(`${API_URL}/api/businesses/${id}`);
       setBusiness(response.data);
     } catch (error) {
       setError("Business not found");
@@ -36,7 +37,7 @@ const Business = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/reviews/${id}/reviews`);
+      const response = await axios.get(`${API_URL}/api/reviews/${id}/reviews`);
       setReviews(response.data);
       
       if (response.data.length > 0) {
@@ -53,7 +54,7 @@ const Business = () => {
     if (!userId) return;
     
     try {
-      const response = await axios.get(`http://localhost:5001/api/users/${userId}/bookmarks`);
+      const response = await axios.get(`${API_URL}/api/users/${userId}/bookmarks`);
       setIsBookmarked(response.data.some(bookmark => bookmark._id === id));
     } catch (error) {
       console.error("Error checking bookmark status:", error);
@@ -73,7 +74,7 @@ const Business = () => {
     }
 
     try {
-      await axios.post(`http://localhost:5001/api/reviews/${id}/reviews`, {
+      await axios.post(`${API_URL}/api/reviews/${id}/reviews`, {
         userId,
         rating: userRating,
         comment: reviewText
@@ -97,10 +98,10 @@ const Business = () => {
 
     try {
       if (isBookmarked) {
-        await axios.delete(`http://localhost:5001/api/users/${userId}/bookmarks/${id}`);
+        await axios.delete(`${API_URL}/api/users/${userId}/bookmarks/${id}`);
         setIsBookmarked(false);
       } else {
-        await axios.post(`http://localhost:5001/api/users/${userId}/bookmarks`, { businessId: id });
+        await axios.post(`${API_URL}/api/users/${userId}/bookmarks`, { businessId: id });
         setIsBookmarked(true);
       }
     } catch (error) {

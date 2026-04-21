@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import API_URL from "../config";
 import Navbar from "../components/NavBar";
 import {
   MapContainer,
@@ -117,7 +118,7 @@ function MapView() {
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/businesses");
+        const res = await axios.get("${API_URL}/api/businesses");
         setBusinesses(res.data);
       } catch (err) {
         console.error("Error fetching businesses:", err);

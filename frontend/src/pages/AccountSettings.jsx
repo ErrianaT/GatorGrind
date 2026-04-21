@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/NavBar";
 import "./AccountSettings.css";
+import API_URL from "../config";
 
 const AccountSettings = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const AccountSettings = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/auth/update/${userId}`,
+        `${API_URL}/api/auth/update/${userId}`,
         { fullName, email, currentPassword, newPassword }
       );
 

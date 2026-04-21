@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Auth.css";
+import API_URL from "../config"
 
 function SignUp() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function SignUp() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/auth/signup",
+        `${API_URL}/api/auth/signup`,
         {
           fullName: formData.fullName,
           email: formData.email,

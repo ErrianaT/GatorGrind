@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Auth.css";
+import API_URL from "../config";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5001/api/auth/login",
+        `${API_URL}/api/auth/login`,
         {
           email: formData.email,
           password: formData.password,

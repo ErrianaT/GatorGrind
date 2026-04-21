@@ -4,6 +4,7 @@ import Navbar from "../components/NavBar";
 import "./Home.css";
 import placeholderImage from "../assets/placeholderImage.png";
 import arrowIcon from "../assets/right-arrow.png";
+import API_URL from "../config";
 
 const mainCategories = [
   "Hair",
@@ -30,7 +31,7 @@ const Home = () => {
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
-        const response = await fetch("http://localhost:5001/api/businesses");
+        const response = await fetch("${API_URL}/api/businesses");
         if (!response.ok) {
           throw new Error("Failed to fetch businesses");
         }

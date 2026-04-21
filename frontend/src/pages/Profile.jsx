@@ -4,6 +4,7 @@ import Navbar from "../components/NavBar";
 import "./Profile.css";
 import placeholderImage from "../assets/placeholderImage.png";
 import axios from "axios";
+import API_URL from "../config";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const Profile = () => {
   const fetchUserBusinesses = async (userId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5001/api/businesses/user/${userId}`);
+      const response = await axios.get(`${API_URL}/api/businesses/user/${userId}`);
       setUserBusinesses(response.data);
     } catch (err) {
       console.error("Error fetching user businesses:", err);
@@ -184,7 +185,7 @@ const Profile = () => {
   const handleDeleteBusiness = async (businessId) => {
     if (window.confirm("Are you sure you want to delete this business?")) {
       try {
-        await axios.delete(`http://localhost:5001/api/businesses/${businessId}`);
+        await axios.delete(`${API_URL}/api/businesses/${businessId}`);
         setUserBusinesses(userBusinesses.filter(b => b._id !== businessId));
         setMessage("");
         setTimeout(() => {
@@ -243,7 +244,7 @@ const Profile = () => {
 
       if (editingBusiness) {
         // Update existing business
-        const response = await axios.put(`http://localhost:5001/api/businesses/${editingBusiness._id}`, businessData);
+        const response = await axios.put(`${API_URL}/api/businesses/${editingBusiness._id}`, businessData);
         setUserBusinesses(userBusinesses.map(b => b._id === editingBusiness._id ? response.data : b));
         setMessage("");
         setTimeout(() => {
@@ -252,7 +253,7 @@ const Profile = () => {
         }, 10);
       } else {
         // Add new business
-        const response = await axios.post("http://localhost:5001/api/businesses", businessData);
+        const response = await axios.post("${API_URL}/api/businesses", businessData);
         setUserBusinesses([...userBusinesses, response.data]);
         setMessage("");
         setTimeout(() => {

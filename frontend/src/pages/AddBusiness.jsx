@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/NavBar";
 import "./AddBusiness.css";
+import API_URL from "../config";
 
 const AddBusiness = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const AddBusiness = () => {
       const userId = localStorage.getItem("userId");
   
       const response = await axios.post(
-        "http://localhost:5001/api/businesses/create",
+        "${API_URL}/api/businesses/create",
         {
           business_name: formData.businessName,
           owner: userId,

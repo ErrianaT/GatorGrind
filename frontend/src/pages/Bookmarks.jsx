@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "../components/NavBar";
 import "./Bookmarks.css";
 import placeholderImage from "../assets/placeholderImage.png";
+import API_URL from "../config";
 
 const Bookmarks = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Bookmarks = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:5001/api/users/${userId}/bookmarks`);
+      const response = await axios.get(`${API_URL}/api/users/${userId}/bookmarks`);
       setBookmarks(response.data);
     } catch (error) {
       console.error("Error fetching bookmarks:", error);
@@ -33,7 +34,7 @@ const Bookmarks = () => {
   const handleRemoveBookmark = async (businessId) => {
     const userId = localStorage.getItem("userId");
     try {
-      await axios.delete(`http://localhost:5001/api/users/${userId}/bookmarks/${businessId}`);
+      await axios.delete(`${API_URL}/api/users/${userId}/bookmarks/${businessId}`);
       setBookmarks(prev => prev.filter(b => b._id !== businessId));
     } catch (error) {
       console.error("Error removing bookmark:", error);
